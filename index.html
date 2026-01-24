@@ -23,12 +23,37 @@
   #contador { font-size: 2em; margin: 20px 0; }
   p { font-size: 1.3em; max-width: 500px; }
 </style>
+  @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flutuar {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.overlay {
+  animation: fadeIn 2s ease forwards;
+}
+
+h1 {
+  animation: flutuar 4s ease-in-out infinite;
+}
+
+#contador, #casamento {
+  font-size: 1.8em;
+  margin: 10px 0;
+  animation: fadeIn 3s ease forwards;
+}
 </head>
 <body>
 <div class="overlay">
-  <h1>❣️ Tiago & Ricaely ❣️</h1>
-  <div id="contador">Carregando contador...</div>
-  <p>“Em seus olhos, encontro a paz que tanto buscava e a força para enfrentar qualquer obstáculo. "Longe de você, eu enlouqueço muito mais, eu vivo na espera de poder viver a vida com você! Então vamos viver nossos sonhos, temos tão pouco tempo!.”</p>
+  <h1>👰‍♀️🤵‍♂️ Tiago & Ricaely 💍</h1>
+<div id="contador"></div>
+<div id="casamento"></div>
+  <p> Desde o nosso primeiro sim, cada dia ao seu lado é um presente. Contando os dias do nosso amor e aguardando, com o coração cheio de alegria, o momento de dizer “sim” para sempre. 💍❤️</p>
 </div>
 
 <audio id="romanticAudio" src="musica.mp3"></audio>
@@ -49,23 +74,43 @@
 </script>
   
 <script>
-// Data de início
-const inicio = new Date(2025, 0, 18); // Janeiro é mês 0
+const inicioNamoro = new Date(2025, 0, 18);   // 18/01/2025
+const dataCasamento = new Date(2027, 0, 18); // 18/01/2027
+
 const cont = document.getElementById('contador');
+const casamento = document.getElementById('casamento');
 
 function atualizar() {
   const agora = new Date();
-  let diff = agora - inicio;
 
-  const segs = Math.floor(diff / 1000);
-  const mins = Math.floor(segs / 60);
-  const horas = Math.floor(mins / 60);
-  const dias = Math.floor(horas / 24);
-  const semanas = Math.floor(dias / 7);
-  const meses = Math.floor(dias / 30.44);
+  // 💖 NAMORO — meses e dias
+  let meses = (agora.getFullYear() - inicioNamoro.getFullYear()) * 12;
+  meses += agora.getMonth() - inicioNamoro.getMonth();
 
-  cont.textContent = `${meses} meses, ${semanas} semanas, ${dias} dias`;
+  let dias = agora.getDate() - inicioNamoro.getDate();
+  if (dias < 0) {
+    meses--;
+    const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+    dias += ultimoMes;
+  }
+
+  cont.textContent = `💖 ${meses} meses e ${dias} dias juntos`;
+
+  // 💍 CASAMENTO — contagem regressiva
+  let diff = dataCasamento - agora;
+
+  if (diff > 0) {
+    const diasRestantes = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const mesesRestantes = Math.floor(diasRestantes / 30.44);
+    const diasFinais = Math.floor(diasRestantes % 30.44);
+
+    casamento.textContent =
+      `💍 Faltam ${mesesRestantes} meses e ${diasFinais} dias para o nosso casamento`;
+  } else {
+    casamento.textContent = `💍 Hoje é o nosso grande dia!`;
+  }
 }
+
 setInterval(atualizar, 1000);
 atualizar();
 </script>
