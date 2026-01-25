@@ -122,16 +122,12 @@ function atualizar() {
 
   const diff = dataCasamento - agora;
 
-  if (diff > 0) {
-    const diasTotais = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const mesesRestantes = Math.floor(diasTotais / 30.44);
-    const diasFinais = Math.floor(diasTotais % 30.44);
-
-    casamento.textContent =
-      `💍 Faltam ${mesesRestantes} meses e ${diasFinais} dias para o nosso casamento`;
-  } else {
-    casamento.textContent = `💍 Hoje é o nosso grande dia!`;
-  }
+if (diff > 0) {
+  const diasRestantes = Math.ceil(diff / (1000 * 60 * 60 * 24));
+  casamento.textContent =
+    `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
+} else {
+  casamento.textContent = `💍 Hoje é o nosso grande dia! 💒✨`;
 }
 
 atualizar();
