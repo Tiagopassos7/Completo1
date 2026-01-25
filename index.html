@@ -79,21 +79,20 @@
   <p> Desde o nosso primeiro sim, cada dia ao seu lado é um presente. Contando os dias do nosso amor e aguardando, com o coração cheio de alegria, o momento de dizer “sim” para sempre. 💍❤️</p>
 </div>
 
-<audio id="romanticAudio" src="música.mp3"></audio>
+<audio id="romanticAudio" src="música.mp3" preload="auto"></audio>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const audio = document.getElementById("romanticAudio");
+document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("romanticAudio");
 
-    function playAudioOnce() {
-      audio.play().catch((e) => {
-        console.log("Autoplay bloqueado. Aguardando interação do usuário.");
-      });
-      document.removeEventListener("click", playAudioOnce);
-    }
+  const iniciarAudio = () => {
+    audio.volume = 0.7;
+    audio.play().catch(() => {});
+  };
 
-    document.addEventListener("click", playAudioOnce);
-  });
+  document.addEventListener("click", iniciarAudio, { once: true });
+  document.addEventListener("touchstart", iniciarAudio, { once: true });
+});
 </script>
   
 <script>
