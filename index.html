@@ -114,7 +114,11 @@ function atualizar() {
 
   if (dias < 0) {
     meses--;
-    const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+    const ultimoMes = new Date(
+      agora.getFullYear(),
+      agora.getMonth(),
+      0
+    ).getDate();
     dias += ultimoMes;
   }
 
@@ -122,17 +126,16 @@ function atualizar() {
 
   const diff = dataCasamento - agora;
 
-if (diff > 0) {
-  const diasRestantes = Math.ceil(diff / (1000 * 60 * 60 * 24));
-  casamento.textContent =
-    `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
-} else {
-  casamento.textContent = `💍 Hoje é o nosso grande dia! 💒✨`;
+  if (diff > 0) {
+    const diasRestantes = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    casamento.textContent =
+      `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
+  } else {
+    casamento.textContent =
+      `💍 Hoje é o nosso grande dia! 💒✨`;
+  }
 }
 
 atualizar();
 setInterval(atualizar, 1000);
 </script>
-
-</body>
-</html>
