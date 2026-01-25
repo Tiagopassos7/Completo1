@@ -4,77 +4,81 @@
 <head>
 <meta charset="UTF-8" />
 <title>Contador de Namoro – Tiago & Ricaely</title>
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
 
-  body, html {
-    margin:0;
-    padding:0;
-    height:100%;
-    overflow:hidden;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
-  body { 
-    background: url('IMG-20260123-WA0364.jpg') center/cover no-repeat;
-    font-family: 'Dancing Script', cursive;
-    color: white;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-  }
+body {
+  background: url('IMG-20260123-WA0364.jpg') center/cover no-repeat;
+  font-family: 'Dancing Script', cursive;
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
 
-  .overlay {
-    position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-    animation: fadeIn 2s ease forwards;
-  }
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  animation: fadeIn 2s ease forwards;
+}
 
-  h1 {
-    font-size: 3em;
-    margin-bottom: 0.3em;
-    animation: flutuar 4s ease-in-out infinite;
-  }
+h1 {
+  font-size: 3em;
+  margin-bottom: 0.3em;
+  animation: flutuar 4s ease-in-out infinite;
+}
 
-  #contador, #casamento {
-    font-size: 1.8em;
-    margin: 10px 0;
-    animation: fadeIn 3s ease forwards;
-  }
+#contador, #casamento {
+  font-size: 1.8em;
+  margin: 10px 0;
+}
 
-  p {
-    font-size: 1.3em;
-    max-width: 500px;
-  }
+p {
+  font-size: 1.3em;
+  max-width: 500px;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  @keyframes flutuar {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-    100% { transform: translateY(0); }
-  }
+@keyframes flutuar {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
 </style>
 </head>
+
 <body>
+
 <div class="overlay">
   <h1>👰‍♀️🤵‍♂️ Tiago & Ricaely 💍</h1>
-<div id="contador"></div>
-<div id="casamento"></div>
-  <p> Desde o nosso primeiro sim, cada dia ao seu lado é um presente. Contando os dias do nosso amor e aguardando, com o coração cheio de alegria, o momento de dizer “sim” para sempre. 💍❤️</p>
+  <div id="contador"></div>
+  <div id="casamento"></div>
+
+  <p>
+    Desde o nosso primeiro sim, cada dia ao seu lado é um presente.
+    Contando os dias do nosso amor e aguardando, com o coração cheio de alegria,
+    o momento de dizer “sim” para sempre. 💍❤️
+  </p>
 </div>
 
-<audio id="romanticAudio" src="música.mp3" preload="auto"></audio>
+<audio id="romanticAudio" src="música.mp3" preload="auto" loop></audio>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -83,16 +87,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const iniciarAudio = () => {
     audio.volume = 0.7;
     audio.play().catch(() => {});
+    document.removeEventListener("click", iniciarAudio);
+    document.removeEventListener("touchstart", iniciarAudio);
   };
 
-  document.addEventListener("click", iniciarAudio, { once: true });
-  document.addEventListener("touchstart", iniciarAudio, { once: true });
+  document.addEventListener("click", iniciarAudio);
+  document.addEventListener("touchstart", iniciarAudio);
 });
 </script>
-  
+
 <script>
-const inicioNamoro = new Date(2025, 0, 18);   // 18/01/2025
-const dataCasamento = new Date(2027, 0, 18); // 18/01/2027
+const inicioNamoro = new Date(2025, 0, 18);
+const dataCasamento = new Date(2027, 0, 18);
 
 const cont = document.getElementById('contador');
 const casamento = document.getElementById('casamento');
@@ -100,11 +106,12 @@ const casamento = document.getElementById('casamento');
 function atualizar() {
   const agora = new Date();
 
-  // 💖 NAMORO — meses e dias
-  let meses = (agora.getFullYear() - inicioNamoro.getFullYear()) * 12;
-  meses += agora.getMonth() - inicioNamoro.getMonth();
+  let meses =
+    (agora.getFullYear() - inicioNamoro.getFullYear()) * 12 +
+    (agora.getMonth() - inicioNamoro.getMonth());
 
   let dias = agora.getDate() - inicioNamoro.getDate();
+
   if (dias < 0) {
     meses--;
     const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
@@ -113,13 +120,12 @@ function atualizar() {
 
   cont.textContent = `💖 ${meses} meses e ${dias} dias juntos`;
 
-  // 💍 CASAMENTO — contagem regressiva
-  let diff = dataCasamento - agora;
+  const diff = dataCasamento - agora;
 
   if (diff > 0) {
-    const diasRestantes = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const mesesRestantes = Math.floor(diasRestantes / 30.44);
-    const diasFinais = Math.floor(diasRestantes % 30.44);
+    const diasTotais = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const mesesRestantes = Math.floor(diasTotais / 30.44);
+    const diasFinais = Math.floor(diasTotais % 30.44);
 
     casamento.textContent =
       `💍 Faltam ${mesesRestantes} meses e ${diasFinais} dias para o nosso casamento`;
@@ -128,8 +134,9 @@ function atualizar() {
   }
 }
 
-setInterval(atualizar, 1000);
 atualizar();
+setInterval(atualizar, 1000);
 </script>
+
 </body>
 </html>
