@@ -31,7 +31,6 @@ body {
   justify-content: center;
   text-align: center;
   padding: 20px;
-  animation: fadeIn 2s ease forwards;
 }
 
 h1 {
@@ -60,21 +59,11 @@ p {
   cursor: pointer;
   background: rgba(255,255,255,0.95);
   color: #222;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-
-.player:active {
-  transform: scale(0.95);
 }
 
 .player.playing {
   background: #1db954;
   color: white;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes flutuar {
@@ -89,54 +78,60 @@ p {
 
 <div class="overlay">
   <h1>👰‍♀️🤵‍♂️ Tiago & Ricaely 💍</h1>
-
   <div id="contador"></div>
   <div id="casamento"></div>
 
   <p>
     Desde o nosso primeiro sim, cada dia ao seu lado é um presente.
-    Contando os dias do nosso amor e aguardando, com o coração cheio de alegria,
-    o momento de dizer “sim” para sempre. 💍❤️
+    Contando os dias do nosso amor e aguardando o momento de dizer “sim” para sempre. 💍❤️
   </p>
 
   <button id="btnMusica" class="player">▶️ Tocar música</button>
 </div>
 
-<!-- ÁUDIO (nome com acento tratado via URL encoding) -->
-<audio id="romanticAudio" src="m%C3%BAsica.mp3" preload="metadata" playsinline loop></audio>
-  
-<script>
-/* 🎵 PLAY / PAUSE DA MÚSICA */
-document.addEventListener("DOMContentLoaded", () => {
-  const audio = document.getElementById("romanticAudio");
-  const btn = document.getElementById("btnMusica");
+<audio id="romanticAudio" src="m%C3%BAsica.mp3" preload="auto" playsinline loop></audio>
 
-  btn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.volume = 0.7;
-      audio.play();
-      btn.textContent = "⏸️ Pausar música";
-      btn.classList.add("playing");
-    } else {
-      audio.pause();
-      btn.textContent = "▶️ Tocar música";
-      btn.classList.remove("playing");
-    }
-  });
+<script>
+const audio = document.getElementById("romanticAudio");
+const btn = document.getElementById("btnMusica");
+
+// garante carregamento real
+audio.load();
+
+// estados REAIS do áudio
+audio.addEventListener("play", () => {
+  btn.textContent = "⏸️ Pausar música";
+  btn.classList.add("playing");
 });
 
-/* 💖 DATAS IMPORTANTES */
-const inicioNamoro = new Date(2025, 0, 18);   // 18/01/2025
-const dataCasamento = new Date(2027, 0, 18); // 18/01/2027
+audio.addEventListener("pause", () => {
+  btn.textContent = "▶️ Tocar música";
+  btn.classList.remove("playing");
+});
+
+btn.addEventListener("click", async () => {
+  try {
+    if (audio.paused) {
+      audio.volume = 0.7;
+      await audio.play(); // só muda estado se tocar
+    } else {
+      audio.pause();
+    }
+  } catch (e) {
+    alert("Toque novamente para liberar o áudio 🎧");
+  }
+});
+
+// 💖 DATAS
+const inicioNamoro = new Date(2025, 0, 18);
+const dataCasamento = new Date(2027, 0, 18);
 
 const cont = document.getElementById("contador");
 const casamento = document.getElementById("casamento");
 
-/* ⏱️ CONTADORES */
 function atualizar() {
   const agora = new Date();
 
-  // 💖 Namoro — meses e dias
   let meses =
     (agora.getFullYear() - inicioNamoro.getFullYear()) * 12 +
     (agora.getMonth() - inicioNamoro.getMonth());
@@ -145,27 +140,15 @@ function atualizar() {
 
   if (dias < 0) {
     meses--;
-    const ultimoMes = new Date(
-      agora.getFullYear(),
-      agora.getMonth(),
-      0
-    ).getDate();
-    dias += ultimoMes;
+    dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
   }
 
   cont.textContent = `💖 ${meses} meses e ${dias} dias juntos`;
 
-  // 💍 Casamento — dias restantes
   const diff = dataCasamento - agora;
-
   if (diff > 0) {
-    const diasRestantes = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    casamento.textContent =
-      `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
-
-    if (diasRestantes <= 30) {
-      casamento.style.color = "#ffd1dc";
-    }
+    const diasRestantes = Math.ceil(diff / 86400000);
+    casamento.textContent = `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
   } else {
     casamento.textContent = "💍 Hoje é o nosso grande dia! 💒✨";
   }
