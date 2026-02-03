@@ -30,6 +30,7 @@ body {
   justify-content: center;
   text-align: center;
   padding: 20px;
+  z-index: 1;
 }
 
 h1 {
@@ -54,6 +55,14 @@ p {
   opacity: 0.85;
 }
 
+/* camada invisível que libera o áudio */
+.audio-unlock {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: transparent;
+}
+
 @keyframes flutuar {
   0% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -63,6 +72,8 @@ p {
 </head>
 
 <body>
+
+<div class="audio-unlock" id="audioUnlock"></div>
 
 <div class="overlay">
   <h1>👰‍♀️🤵‍♂️ Tiago & Ricaely 💍</h1>
@@ -74,50 +85,43 @@ p {
     Meu amor, hoje é o dia de celebrar a sua vida, e eu só consigo agradecer por ter você ao meu lado. Feliz aniversário! Que esse novo ano venha cheio de saúde, paz, sonhos realizados e muitos momentos felizes. Você é uma pessoa incrível, que ilumina meus dias e torna tudo mais leve. Obrigado por caminhar comigo, por acreditar na gente e por ser esse amor tão bonito. Que a vida continue nos surpreendendo, e que eu possa estar sempre ao seu lado, cuidando de você e construindo nosso futuro juntos. Te amo. 💛
   </p>
 
-  <div class="hint">📱 Toque em qualquer lugar da tela para ouvir nossa música</div>
+  <div class="hint">📱 Toque na tela para ouvir nossa música</div>
 </div>
 
-<!-- 🎵 ÁUDIO (nome com acento corrigido) -->
+<!-- 🎵 ÁUDIO -->
 <audio id="romanticAudio"
-       src="m%C3%BAsica.mp3"
-       preload="auto"
-       playsinline
-       loop>
+  src="m%C3%BAsica.mp3"
+  preload="auto"
+  playsinline
+  loop>
 </audio>
 
 <script>
-/* 🎵 MÚSICA COM TOQUE NA TELA (MOBILE SAFE) */
+/* 🎵 DESBLOQUEIO DE ÁUDIO (MOBILE REAL) */
 const audio = document.getElementById("romanticAudio");
-let iniciado = false;
+const unlock = document.getElementById("audioUnlock");
 
-function tocarMusica() {
-  if (iniciado) return;
-
+unlock.addEventListener("click", () => {
   audio.volume = 0.7;
   audio.play()
     .then(() => {
-      iniciado = true;
-      document.removeEventListener("pointerdown", tocarMusica);
+      unlock.remove(); // some depois de liberar
     })
     .catch(() => {
-      // celular bloqueou? próximo toque tenta de novo
+      // se falhar, continua até tocar
     });
-}
-
-document.addEventListener("pointerdown", tocarMusica);
+});
 
 /* 💖 DATAS */
-const inicioNamoro = new Date(2025, 0, 18);   // 18/01/2025
-const dataCasamento = new Date(2026, 10, 22); // 22/11/2026
+const inicioNamoro = new Date(2025, 0, 18);
+const dataCasamento = new Date(2026, 10, 22);
 
 const cont = document.getElementById("contador");
 const casamento = document.getElementById("casamento");
 
-/* ⏱️ CONTADORES */
 function atualizar() {
   const agora = new Date();
 
-  // 💖 Tempo de namoro
   let meses =
     (agora.getFullYear() - inicioNamoro.getFullYear()) * 12 +
     (agora.getMonth() - inicioNamoro.getMonth());
@@ -131,9 +135,7 @@ function atualizar() {
 
   cont.textContent = `💖 ${meses} meses e ${dias} dias juntos`;
 
-  // 💍 Dias para o casamento
   const diff = dataCasamento - agora;
-
   if (diff > 0) {
     const diasRestantes = Math.ceil(diff / 86400000);
     casamento.textContent =
