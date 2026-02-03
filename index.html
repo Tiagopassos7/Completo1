@@ -48,6 +48,12 @@ p {
   max-width: 520px;
 }
 
+.hint {
+  margin-top: 15px;
+  font-size: 1.1em;
+  opacity: 0.85;
+}
+
 @keyframes flutuar {
   0% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -70,60 +76,11 @@ p {
     o momento de dizer “sim” para sempre. 💍❤️
   </p>
 
-  <p style="font-size:1.1em; opacity:0.85;">
-    📱 Toque na tela para ouvir nossa música
-  </p>
+  <div class="hint">📱 Toque na tela para ouvir nossa música</div>
 </div>
 
 <!-- 🎵 ÁUDIO -->
 <audio id="romanticAudio"
        src="m%C3%BAsica.mp3"
        preload="auto"
-       playsinline
-       loop>
-</audio>
-
-<script>
-/* 🎵 TOCAR MÚSICA COM QUALQUER TOQUE */
-const audio = document.getElementById("romanticAudio");
-let musicaIniciada = false;
-
-function iniciarMusica() {
-  if (!musicaIniciada) {
-    audio.volume = 0.7;
-    audio.play().then(() => {
-      musicaIniciada = true;
-    }).catch(() => {});
-  }
-}
-
-document.addEventListener("touchstart", iniciarMusica, { once: true });
-document.addEventListener("click", iniciarMusica, { once: true });
-
-/* 💖 DATAS IMPORTANTES */
-const inicioNamoro = new Date(2025, 0, 18);   // 18/01/2025
-const dataCasamento = new Date(2026, 10, 22); // 22/11/2026
-
-const cont = document.getElementById("contador");
-const casamento = document.getElementById("casamento");
-
-/* ⏱️ CONTADORES */
-function atualizar() {
-  const agora = new Date();
-
-  // 💖 namoro
-  let meses =
-    (agora.getFullYear() - inicioNamoro.getFullYear()) * 12 +
-    (agora.getMonth() - inicioNamoro.getMonth());
-
-  let dias = agora.getDate() - inicioNamoro.getDate();
-
-  if (dias < 0) {
-    meses--;
-    dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
-  }
-
-  cont.textContent = `💖 ${meses} meses e ${dias} dias juntos`;
-
-  // 💍 casamento (dias restante
   
