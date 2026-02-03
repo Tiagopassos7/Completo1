@@ -74,37 +74,37 @@ p {
     Meu amor, hoje é o dia de celebrar a sua vida, e eu só consigo agradecer por ter você ao meu lado. Feliz aniversário! Que esse novo ano venha cheio de saúde, paz, sonhos realizados e muitos momentos felizes. Você é uma pessoa incrível, que ilumina meus dias e torna tudo mais leve. Obrigado por caminhar comigo, por acreditar na gente e por ser esse amor tão bonito. Que a vida continue nos surpreendendo, e que eu possa estar sempre ao seu lado, cuidando de você e construindo nosso futuro juntos. Te amo. 💛
   </p>
 
-  <div class="hint">📱 Toque na tela para ouvir nossa música</div>
+  <div class="hint">📱 Toque em qualquer lugar da tela para ouvir nossa música</div>
 </div>
 
-<!-- 🎵 ÁUDIO -->
+<!-- 🎵 ÁUDIO (nome com acento corrigido) -->
 <audio id="romanticAudio"
-       src="música.mp3"
+       src="m%C3%BAsica.mp3"
        preload="auto"
        playsinline
        loop>
 </audio>
 
 <script>
-/* 🎵 MÚSICA COM TOQUE NA TELA (CELULAR SAFE) */
+/* 🎵 MÚSICA COM TOQUE NA TELA (MOBILE SAFE) */
 const audio = document.getElementById("romanticAudio");
-let tocando = false;
+let iniciado = false;
 
-function tentarTocar() {
-  if (tocando) return;
+function tocarMusica() {
+  if (iniciado) return;
 
   audio.volume = 0.7;
   audio.play()
     .then(() => {
-      tocando = true;
+      iniciado = true;
+      document.removeEventListener("pointerdown", tocarMusica);
     })
     .catch(() => {
-      // se falhar, o próximo toque tenta de novo
+      // celular bloqueou? próximo toque tenta de novo
     });
 }
 
-// pointerdown funciona em tudo (melhor que click/touch)
-document.addEventListener("pointerdown", tentarTocar);
+document.addEventListener("pointerdown", tocarMusica);
 
 /* 💖 DATAS */
 const inicioNamoro = new Date(2025, 0, 18);   // 18/01/2025
