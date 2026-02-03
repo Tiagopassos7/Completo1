@@ -83,4 +83,72 @@ p {
 <audio id="romanticAudio"
        src="m%C3%BAsica.mp3"
        preload="auto"
-  
+       playsinline
+       loop>
+</audio>
+
+<script>
+/* 🎵 MÚSICA COM TOQUE NA TELA (CELULAR SAFE) */
+const audio = document.getElementById("romanticAudio");
+let tocando = false;
+
+function tentarTocar() {
+  if (tocando) return;
+
+  audio.volume = 0.7;
+  audio.play()
+    .then(() => {
+      tocando = true;
+    })
+    .catch(() => {
+      // se falhar, o próximo toque tenta de novo
+    });
+}
+
+// pointerdown funciona em tudo (melhor que click/touch)
+document.addEventListener("pointerdown", tentarTocar);
+
+/* 💖 DATAS */
+const inicioNamoro = new Date(2025, 0, 18);   // 18/01/2025
+const dataCasamento = new Date(2026, 10, 22); // 22/11/2026
+
+const cont = document.getElementById("contador");
+const casamento = document.getElementById("casamento");
+
+/* ⏱️ CONTADORES */
+function atualizar() {
+  const agora = new Date();
+
+  // 💖 Tempo de namoro
+  let meses =
+    (agora.getFullYear() - inicioNamoro.getFullYear()) * 12 +
+    (agora.getMonth() - inicioNamoro.getMonth());
+
+  let dias = agora.getDate() - inicioNamoro.getDate();
+
+  if (dias < 0) {
+    meses--;
+    dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+  }
+
+  cont.textContent = `💖 ${meses} meses e ${dias} dias juntos`;
+
+  // 💍 Dias para o casamento
+  const diff = dataCasamento - agora;
+
+  if (diff > 0) {
+    const diasRestantes = Math.ceil(diff / 86400000);
+    casamento.textContent =
+      `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
+  } else {
+    casamento.textContent =
+      "💍 Hoje é o nosso grande dia! 💒✨";
+  }
+}
+
+atualizar();
+setInterval(atualizar, 1000);
+</script>
+
+</body>
+</html>
