@@ -11,7 +11,6 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -49,23 +48,6 @@ p {
   max-width: 520px;
 }
 
-.player {
-  margin-top: 22px;
-  padding: 12px 30px;
-  font-size: 1.3em;
-  font-family: 'Dancing Script', cursive;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  background: rgba(255,255,255,0.95);
-  color: #222;
-}
-
-.player.playing {
-  background: #1db954;
-  color: white;
-}
-
 @keyframes flutuar {
   0% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -78,60 +60,58 @@ p {
 
 <div class="overlay">
   <h1>👰‍♀️🤵‍♂️ Tiago & Ricaely 💍</h1>
+
   <div id="contador"></div>
   <div id="casamento"></div>
 
   <p>
     Desde o nosso primeiro sim, cada dia ao seu lado é um presente.
-    Contando os dias do nosso amor e aguardando o momento de dizer “sim” para sempre. 💍❤️
+    Contando os dias do nosso amor e aguardando, com o coração cheio de alegria,
+    o momento de dizer “sim” para sempre. 💍❤️
   </p>
 
-  <button id="btnMusica" class="player">▶️ Tocar música</button>
+  <p style="font-size:1.1em; opacity:0.85;">
+    📱 Toque na tela para ouvir nossa música
+  </p>
 </div>
 
-<audio id="romanticAudio" src="m%C3%BAsica.mp3" preload="auto" playsinline loop></audio>
+<!-- 🎵 ÁUDIO -->
+<audio id="romanticAudio"
+       src="m%C3%BAsica.mp3"
+       preload="auto"
+       playsinline
+       loop>
+</audio>
 
 <script>
+/* 🎵 TOCAR MÚSICA COM QUALQUER TOQUE */
 const audio = document.getElementById("romanticAudio");
-const btn = document.getElementById("btnMusica");
+let musicaIniciada = false;
 
-// garante carregamento real
-audio.load();
-
-// estados REAIS do áudio
-audio.addEventListener("play", () => {
-  btn.textContent = "⏸️ Pausar música";
-  btn.classList.add("playing");
-});
-
-audio.addEventListener("pause", () => {
-  btn.textContent = "▶️ Tocar música";
-  btn.classList.remove("playing");
-});
-
-btn.addEventListener("click", async () => {
-  try {
-    if (audio.paused) {
-      audio.volume = 0.7;
-      await audio.play(); // só muda estado se tocar
-    } else {
-      audio.pause();
-    }
-  } catch (e) {
-    alert("Toque novamente para liberar o áudio 🎧");
+function iniciarMusica() {
+  if (!musicaIniciada) {
+    audio.volume = 0.7;
+    audio.play().then(() => {
+      musicaIniciada = true;
+    }).catch(() => {});
   }
-});
+}
 
-// 💖 DATAS
-const inicioNamoro = new Date(2025, 0, 18);
-const dataCasamento = new Date(2027, 0, 18);
+document.addEventListener("touchstart", iniciarMusica, { once: true });
+document.addEventListener("click", iniciarMusica, { once: true });
+
+/* 💖 DATAS IMPORTANTES */
+const inicioNamoro = new Date(2025, 0, 18);   // 18/01/2025
+const dataCasamento = new Date(2026, 10, 22); // 22/11/2026
 
 const cont = document.getElementById("contador");
 const casamento = document.getElementById("casamento");
 
+/* ⏱️ CONTADORES */
 function atualizar() {
   const agora = new Date();
 
+  // 💖 namoro
   let meses =
     (agora.getFullYear() - inicioNamoro.getFullYear()) * 12 +
     (agora.getMonth() - inicioNamoro.getMonth());
@@ -145,18 +125,5 @@ function atualizar() {
 
   cont.textContent = `💖 ${meses} meses e ${dias} dias juntos`;
 
-  const diff = dataCasamento - agora;
-  if (diff > 0) {
-    const diasRestantes = Math.ceil(diff / 86400000);
-    casamento.textContent = `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
-  } else {
-    casamento.textContent = "💍 Hoje é o nosso grande dia! 💒✨";
-  }
-}
-
-atualizar();
-setInterval(atualizar, 1000);
-</script>
-
-</body>
-</html>
+  // 💍 casamento (dias restante
+  
