@@ -55,14 +55,6 @@ p {
   opacity: 0.85;
 }
 
-/* camada invisível que libera o áudio */
-.audio-unlock {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  background: transparent;
-}
-
 @keyframes flutuar {
   0% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -73,8 +65,6 @@ p {
 
 <body>
 
-<div class="audio-unlock" id="audioUnlock"></div>
-
 <div class="overlay">
   <h1>👰‍♀️🤵‍♂️ Tiago & Ricaely 💍</h1>
 
@@ -82,10 +72,13 @@ p {
   <div id="casamento"></div>
 
   <p>
-    Meu amor, hoje é o dia de celebrar a sua vida, e eu só consigo agradecer por ter você ao meu lado. Feliz aniversário! Que esse novo ano venha cheio de saúde, paz, sonhos realizados e muitos momentos felizes. Você é uma pessoa incrível, que ilumina meus dias e torna tudo mais leve. Obrigado por caminhar comigo, por acreditar na gente e por ser esse amor tão bonito. Que a vida continue nos surpreendendo, e que eu possa estar sempre ao seu lado, cuidando de você e construindo nosso futuro juntos. Te amo. 💛
+    Meu amor, hoje é o dia de celebrar a sua vida, e eu só consigo agradecer por ter você ao meu lado.
+    Feliz aniversário! Que esse novo ano venha cheio de saúde, paz, sonhos realizados e muitos momentos felizes.
+    Você é uma pessoa incrível, que ilumina meus dias e torna tudo mais leve.
+    Te amo. 💛
   </p>
 
-  <div class="hint">📱 Toque na tela para ouvir nossa música</div>
+  <div class="hint" id="hint">📱 Toque na tela para ouvir nossa música</div>
 </div>
 
 <!-- 🎵 ÁUDIO -->
@@ -94,29 +87,25 @@ p {
 </audio>
 
 <script>
+/* 🎵 ÁUDIO */
 const audio = document.getElementById("romanticAudio");
+const hint = document.getElementById("hint");
 let tocando = false;
 
 function iniciarAudio() {
   if (tocando) return;
 
   audio.volume = 0.7;
-
   audio.play().then(() => {
     tocando = true;
-    document.getElementById("hint").textContent = "🎶 Tocando nossa música";
+    hint.textContent = "🎶 Tocando nossa música";
     document.body.removeEventListener("click", iniciarAudio);
     document.body.removeEventListener("touchstart", iniciarAudio);
-  }).catch(err => {
-    console.log("Bloqueado pelo navegador:", err);
   });
 }
 
-// eventos mais compatíveis possíveis
 document.body.addEventListener("click", iniciarAudio);
 document.body.addEventListener("touchstart", iniciarAudio);
-</script>
-
 
 /* 💖 DATAS */
 const inicioNamoro = new Date(2025, 0, 18);
@@ -144,16 +133,14 @@ function atualizar() {
   const diff = dataCasamento - agora;
   if (diff > 0) {
     const diasRestantes = Math.ceil(diff / 86400000);
-    casamento.textContent =
-      `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
+    casamento.textContent = `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
   } else {
-    casamento.textContent =
-      "💍 Hoje é o nosso grande dia! 💒✨";
+    casamento.textContent = "💍 Hoje é o nosso grande dia! 💒✨";
   }
 }
 
 atualizar();
-setInterval(atualizar, 1000);
+setInterval(atualizar, 60000); // 1 minuto é suficiente
 </script>
 
 </body>
