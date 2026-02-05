@@ -89,28 +89,34 @@ p {
 </div>
 
 <!-- 🎵 ÁUDIO -->
-<audio id="romanticAudio"
-  src="m%C3%BAsica.mp3"
-  preload="auto"
-  playsinline
-  loop>
+<audio id="romanticAudio" preload="auto" loop>
+  <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* 🎵 DESBLOQUEIO DE ÁUDIO (MOBILE REAL) */
 const audio = document.getElementById("romanticAudio");
-const unlock = document.getElementById("audioUnlock");
+let tocando = false;
 
-unlock.addEventListener("click", () => {
+function iniciarAudio() {
+  if (tocando) return;
+
   audio.volume = 0.7;
-  audio.play()
-    .then(() => {
-      unlock.remove(); // some depois de liberar
-    })
-    .catch(() => {
-      // se falhar, continua até tocar
-    });
-});
+
+  audio.play().then(() => {
+    tocando = true;
+    document.getElementById("hint").textContent = "🎶 Tocando nossa música";
+    document.body.removeEventListener("click", iniciarAudio);
+    document.body.removeEventListener("touchstart", iniciarAudio);
+  }).catch(err => {
+    console.log("Bloqueado pelo navegador:", err);
+  });
+}
+
+// eventos mais compatíveis possíveis
+document.body.addEventListener("click", iniciarAudio);
+document.body.addEventListener("touchstart", iniciarAudio);
+</script>
+
 
 /* 💖 DATAS */
 const inicioNamoro = new Date(2025, 0, 18);
