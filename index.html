@@ -2,83 +2,166 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<title>Contador de Namoro – Tiago & Ricaely</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Dia dos Namorados – Tiago & Ricaely</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
 
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
 }
 
-body {
-  background: url('IMG-20260123-WA0364.jpg') center/cover no-repeat;
-  font-family: 'Dancing Script', cursive;
-  color: white;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+/* Slide de Fotos de Fundo */
+.bg-slider {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
+.slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* Película escura e efeito de desfoque */
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 20px;
-  z-index: 1;
+  z-index: 2;
+}
+
+/* Cartão Central Estilo Vidro (Glassmorphism) */
+.romantic-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 35px 25px;
+  border-radius: 20px;
+  max-width: 500px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  animation: surgimento 1.5s ease-out;
 }
 
 h1 {
-  font-size: 3em;
-  margin-bottom: 0.3em;
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5em;
+  margin: 0 0 10px 0;
+  color: #ff4d6d;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
   animation: flutuar 4s ease-in-out infinite;
 }
 
 #contador, #casamento {
-  font-size: 1.8em;
-  margin: 10px 0;
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 12px 0;
+  letter-spacing: 0.5px;
+}
+
+#contador {
+  color: #fff;
+}
+
+#casamento {
+  color: #ffb3c1;
 }
 
 p {
-  font-size: 1.3em;
-  max-width: 520px;
+  font-size: 1.05em;
+  line-height: 1.6;
+  margin: 20px 0;
+  font-weight: 300;
 }
 
 .hint {
   margin-top: 15px;
-  font-size: 1.1em;
+  font-size: 0.9em;
   opacity: 0.85;
+  background: rgba(0,0,0,0.3);
+  padding: 8px 15px;
+  border-radius: 20px;
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.hint:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Efeito de Corações Caindo */
+.heart-particle {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  pointer-events: none;
+  z-index: 1;
+  animation: cair linear forwards;
+}
+
+@keyframes cair {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
 @keyframes flutuar {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes surgimento {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
 
 <body>
 
+<!-- Slide de fotos (Substitua pelos nomes das suas fotos) -->
+<div class="bg-slider">
+  <div class="slide active" style="background-image: url('IMG-20260123-WA0364.jpg');"></div>
+  <div class="slide" style="background-image: url('foto2.jpg');"></div>
+  <div class="slide" style="background-image: url('foto3.jpg');"></div>
+</div>
+
 <div class="overlay">
-  <h1>👰‍♀️🤵‍♂️ Tiago & Ricaely 💍</h1>
+  <div class="romantic-card">
+    <h1>Tiago & Ricaely</h1>
 
-  <div id="contador"></div>
-  <div id="casamento"></div>
+    <div id="contador"></div>
+    <div id="casamento"></div>
 
-  <p>
-    Meu amor, hoje é o dia de celebrar a sua vida, e eu só consigo agradecer por ter você ao meu lado.
-    Feliz aniversário! Que esse novo ano venha cheio de saúde, paz, sonhos realizados e muitos momentos felizes.
-    Você é uma pessoa incrível, que ilumina meus dias e torna tudo mais leve.
-    Te amo. 💛
-  </p>
+    <p>
+      Meu amor, feliz Dia dos Namorados! 🌹<br>
+      Olhar para trás e ver tudo o que construímos até aqui me dá a certeza de que quero passar o resto da minha vida ao seu lado. Você é o meu porto seguro, a minha melhor gargalhada e o meu amor mais profundo. Obrigado por ser essa parceira incrível. Te amo daqui até a eternidade! 💛
+    </p>
 
-  <div class="hint" id="hint">📱 Toque na tela para ouvir nossa música</div>
+    <div class="hint" id="hint">📱 Toque para ouvir nossa música</div>
+  </div>
 </div>
 
 <!-- 🎵 ÁUDIO -->
@@ -87,27 +170,70 @@ p {
 </audio>
 
 <script>
-/* 🎵 ÁUDIO */
+/* 🎵 CONTROLE DE ÁUDIO */
 const audio = document.getElementById("romanticAudio");
 const hint = document.getElementById("hint");
 let tocando = false;
 
-function iniciarAudio() {
-  if (tocando) return;
-
-  audio.volume = 0.7;
-  audio.play().then(() => {
-    tocando = true;
-    hint.textContent = "🎶 Tocando nossa música";
-    document.body.removeEventListener("click", iniciarAudio);
-    document.body.removeEventListener("touchstart", iniciarAudio);
-  });
+function alternarAudio() {
+  if (!tocando) {
+    audio.volume = 0.6;
+    audio.play().then(() => {
+      tocando = true;
+      hint.innerHTML = "🎶 Tocando nossa música (Pausar)";
+    }).catch(err => console.log("Aguardando clique..."));
+  } else {
+    audio.pause();
+    tocando = false;
+    hint.innerHTML = "🎵 Música pausada (Tocar)";
+  }
 }
 
-document.body.addEventListener("click", iniciarAudio);
-document.body.addEventListener("touchstart", iniciarAudio);
+hint.addEventListener("click", (e) => {
+  e.stopPropagation(); // Evita conflito com o clique do body
+  alternarAudio();
+});
 
-/* 💖 DATAS */
+// Ativa o som no primeiro clique na tela caso ainda não esteja tocando
+document.body.addEventListener("click", () => {
+  if (!tocando) alternarAudio();
+}, { once: true });
+
+
+/* 📸 SLIDER DE FOTOS DITAMICO */
+const slides = document.querySelectorAll('.slide');
+let slideAtual = 0;
+
+function proximoSlide() {
+  slides[slideAtual].classList.remove('active');
+  slideAtual = (slideAtual + 1) % slides.length;
+  slides[slideAtual].classList.add('active');
+}
+// Muda de foto a cada 5 segundos (se houver mais de uma foto)
+if(slides.length > 1) {
+  setInterval(proximoSlide, 5000);
+}
+
+
+/* 💖 CHUVA DE CORAÇÕES */
+function criarCoracao() {
+  const coracao = document.createElement('div');
+  coracao.classList.add('heart-particle');
+  coracao.innerHTML = ['❤️', '💖', '✨', '🌹'][Math.floor(Math.random() * 4)];
+  coracao.style.left = Math.random() * 100 + 'vw';
+  coracao.style.animationDuration = (Math.random() * 3 + 3) + 's'; // Entre 3 e 6 segundos
+  coracao.style.fontSize = (Math.random() * 15 + 15) + 'px';
+  
+  document.body.appendChild(coracao);
+  
+  setTimeout(() => {
+    coracao.remove();
+  }, 6000);
+}
+setInterval(criarCoracao, 4000); // Cria um novo símbolo a cada 400ms
+
+
+/* 💖 CONTADOR DE DATAS */
 const inicioNamoro = new Date(2025, 0, 18);
 const dataCasamento = new Date(2026, 10, 22);
 
@@ -117,10 +243,7 @@ const casamento = document.getElementById("casamento");
 function atualizar() {
   const agora = new Date();
 
-  let meses =
-    (agora.getFullYear() - inicioNamoro.getFullYear()) * 12 +
-    (agora.getMonth() - inicioNamoro.getMonth());
-
+  let meses = (agora.getFullYear() - inicioNamoro.getFullYear()) * 12 + (agora.getMonth() - inicioNamoro.getMonth());
   let dias = agora.getDate() - inicioNamoro.getDate();
 
   if (dias < 0) {
@@ -128,19 +251,19 @@ function atualizar() {
     dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
   }
 
-  cont.textContent = `💖 ${meses} meses e ${dias} dias juntos`;
+  cont.innerHTML = `💖 <span>${meses} meses</span> e <span>${dias} dias</span> de puro amor`;
 
   const diff = dataCasamento - agora;
   if (diff > 0) {
-    const diasRestantes = Math.ceil(diff / 86400000);
-    casamento.textContent = `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
+    const diasRestantes = Math.floor(diff / (1000 * 60 * 60 * 24));
+    casamento.textContent = `💍 Faltam ${diasRestantes} dias para o nosso grande dia!`;
   } else {
-    casamento.textContent = "💍 Hoje é o nosso grande dia! 💒✨";
+    casamento.textContent = "💍 Chegou o nosso casamento! 💒✨";
   }
 }
 
 atualizar();
-setInterval(atualizar, 60000); // 1 minuto é suficiente
+setInterval(atualizar, 60000);
 </script>
 
 </body>
