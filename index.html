@@ -6,7 +6,7 @@
 <title>Feliz Dia dos Namorados – Tiago & Ricaely</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Montserrat:wght@300;400;600&display=swap');
 
 html, body {
   margin: 0;
@@ -14,9 +14,57 @@ html, body {
   height: 100%;
   overflow: hidden;
   font-family: 'Montserrat', sans-serif;
+  background-color: #0b0103;
 }
 
-/* Slide de Fotos de Fundo */
+/* ✉️ TELA DE ENVELOPE (INTRO) */
+.envelope-container {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #2b0811 0%, #0b0103 100%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1s ease, visibility 1s;
+  cursor: pointer;
+}
+
+.envelope-container.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.heart-seal {
+  font-size: 80px;
+  animation: pulsar 1.5s infinite;
+  filter: drop-shadow(0 0 15px rgba(255, 77, 109, 0.6));
+  transition: transform 0.3s ease;
+}
+
+.envelope-container:hover .heart-seal {
+  transform: scale(1.15);
+}
+
+.envelope-text {
+  color: white;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.2em;
+  margin-top: 20px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.envelope-subtext {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9em;
+  margin-top: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* 📸 SLIDER DE FOTOS */
 .bg-slider {
   position: absolute;
   inset: 0;
@@ -29,18 +77,17 @@ html, body {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 1.5s ease-in-out;
+  transition: opacity 2s ease-in-out;
 }
 
 .slide.active {
   opacity: 1;
 }
 
-/* Película escura e efeito de desfoque */
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,104 +95,150 @@ html, body {
   text-align: center;
   padding: 20px;
   z-index: 2;
+  overflow-y: auto;
 }
 
-/* Cartão Central Estilo Vidro (Glassmorphism) */
+/* 💝 CARTÃO GLASSMORPHISM PREMIUM */
 .romantic-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 35px 25px;
-  border-radius: 20px;
-  max-width: 500px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  background: rgba(15, 3, 6, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 30px 25px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 77, 109, 0.1);
   color: white;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-  animation: surgimento 1.5s ease-out;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  box-sizing: border-box;
 }
 
 h1 {
   font-family: 'Dancing Script', cursive;
-  font-size: 3.5em;
+  font-size: 3.3em;
   margin: 0 0 10px 0;
   color: #ff4d6d;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-  animation: flutuar 4s ease-in-out infinite;
+  background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
 #contador, #casamento {
-  font-size: 1.2em;
+  font-size: 1.15em;
   font-weight: 600;
-  margin: 12px 0;
-  letter-spacing: 0.5px;
+  margin: 10px 0;
 }
 
-#contador {
-  color: #fff;
+#contador span {
+  color: #ff4d6d;
 }
 
 #casamento {
   color: #ffb3c1;
+  font-size: 1.05em;
+  background: rgba(255, 77, 109, 0.15);
+  padding: 6px 12px;
+  border-radius: 12px;
+  display: inline-block;
 }
 
-p {
-  font-size: 1.05em;
+p.letter {
+  font-size: 0.98em;
   line-height: 1.6;
   margin: 20px 0;
   font-weight: 300;
+  text-align: justify;
 }
 
+/* ⏳ LINHA DO TEMPO DISCRETA */
+.timeline {
+  margin-top: 25px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+  padding-top: 20px;
+  text-align: left;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.88em;
+}
+
+.timeline-date {
+  font-weight: 600;
+  color: #ff4d6d;
+  min-width: 95px;
+}
+
+.timeline-desc {
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 🎵 BOTÃO DE MÚSICA */
 .hint {
-  margin-top: 15px;
-  font-size: 0.9em;
-  opacity: 0.85;
-  background: rgba(0,0,0,0.3);
-  padding: 8px 15px;
+  margin-top: 20px;
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 77, 109, 0.2);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+  padding: 8px 16px;
   border-radius: 20px;
   display: inline-block;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .hint:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 77, 109, 0.4);
+  transform: translateY(-2px);
 }
 
-/* Efeito de Corações Caindo */
+/* 🎈 CORAÇÕES VOLANTES */
 .heart-particle {
   position: absolute;
   color: #ff4d6d;
-  font-size: 20px;
   pointer-events: none;
   z-index: 1;
   animation: cair linear forwards;
 }
 
 @keyframes cair {
-  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
   100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
-@keyframes flutuar {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+@keyframes pulsar {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
-@keyframes surgimento {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+/* Responsividade Básica */
+@media (max-width: 480px) {
+  h1 { font-size: 2.8em; }
+  .romantic-card { padding: 25px 18px; }
+  p.letter { font-size: 0.92em; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Slide de fotos (Substitua pelos nomes das suas fotos) -->
+<!-- ✉️ ENVELOPE DE ENTRADA (Resolve bloqueio de áudio e cria mistério) -->
+<div class="envelope-container" id="envelope" onclick="abrirCarta()">
+  <div class="heart-seal">❤️</div>
+  <div class="envelope-text">Para o amor da minha vida...</div>
+  <div class="envelope-subtext">Toque para abrir</div>
+</div>
+
+<!-- 📸 SLIDER DE FOTOS (Coloque suas duas fotos aqui) -->
 <div class="bg-slider">
   <div class="slide active" style="background-image: url('IMG-20260123-WA0364.jpg');"></div>
   <div class="slide" style="background-image: url('foto2.jpg');"></div>
-  <div class="slide" style="background-image: url('foto3.jpg');"></div>
 </div>
 
 <div class="overlay">
@@ -155,12 +248,28 @@ p {
     <div id="contador"></div>
     <div id="casamento"></div>
 
-    <p>
+    <p class="letter">
       Meu amor, feliz Dia dos Namorados! 🌹<br>
       Olhar para trás e ver tudo o que construímos até aqui me dá a certeza de que quero passar o resto da minha vida ao seu lado. Você é o meu porto seguro, a minha melhor gargalhada e o meu amor mais profundo. Obrigado por ser essa parceira incrível. Te amo daqui até a eternidade! 💛
     </p>
 
-    <div class="hint" id="hint">📱 Toque para ouvir nossa música</div>
+    <!-- ⏳ LINHA DO TEMPO -->
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-date">18/01/2025</span>
+        <span class="timeline-desc">💍 O início do nosso "Para Sempre"</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-date">12/06/2026</span>
+        <span class="timeline-desc">🌹 Nosso Dia dos Namorados juntos</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-date">22/11/2026</span>
+        <span class="timeline-desc">💒 O grande dia do nosso Casamento</span>
+      </div>
+    </div>
+
+    <div class="hint" id="hint">🎶 Tocando nossa música (Pausar)</div>
   </div>
 </div>
 
@@ -170,37 +279,39 @@ p {
 </audio>
 
 <script>
-/* 🎵 CONTROLE DE ÁUDIO */
 const audio = document.getElementById("romanticAudio");
 const hint = document.getElementById("hint");
+const envelope = document.getElementById("envelope");
 let tocando = false;
 
-function alternarAudio() {
+/* ✉️ FUNÇÃO PARA ABRIR O ENVELOPE E ATIVAR ÁUDIO */
+function abrirCarta() {
+  envelope.classList.add("hidden");
+  
+  // Liga o áudio instantaneamente ao clicar (o navegador permite porque foi ação do usuário)
+  audio.volume = 0.6;
+  audio.play().then(() => {
+    tocando = true;
+  }).catch(err => console.log("Erro ao reproduzir áudio:", err));
+
+  // Inicia a chuva de corações apenas depois de aberto
+  setInterval(criarCoracao, 450);
+}
+
+/* 🎵 CONTROLE MANUAL DO PLAY/PAUSE */
+hint.addEventListener("click", () => {
   if (!tocando) {
-    audio.volume = 0.6;
-    audio.play().then(() => {
-      tocando = true;
-      hint.innerHTML = "🎶 Tocando nossa música (Pausar)";
-    }).catch(err => console.log("Aguardando clique..."));
+    audio.play();
+    tocando = true;
+    hint.innerHTML = "🎶 Tocando nossa música (Pausar)";
   } else {
     audio.pause();
     tocando = false;
     hint.innerHTML = "🎵 Música pausada (Tocar)";
   }
-}
-
-hint.addEventListener("click", (e) => {
-  e.stopPropagation(); // Evita conflito com o clique do body
-  alternarAudio();
 });
 
-// Ativa o som no primeiro clique na tela caso ainda não esteja tocando
-document.body.addEventListener("click", () => {
-  if (!tocando) alternarAudio();
-}, { once: true });
-
-
-/* 📸 SLIDER DE FOTOS DITAMICO */
+/* 📸 ALTERNADOR DE SLIDES */
 const slides = document.querySelectorAll('.slide');
 let slideAtual = 0;
 
@@ -209,34 +320,26 @@ function proximoSlide() {
   slideAtual = (slideAtual + 1) % slides.length;
   slides[slideAtual].classList.add('active');
 }
-// Muda de foto a cada 5 segundos (se houver mais de uma foto)
 if(slides.length > 1) {
-  setInterval(proximoSlide, 5000);
+  setInterval(proximoSlide, 6000); // Troca a cada 6 segundos suavemente
 }
 
-
-/* 💖 CHUVA DE CORAÇÕES */
+/* 💖 CHUVA DE ELEMENTOS ROMÂNTICOS */
 function criarCoracao() {
   const coracao = document.createElement('div');
   coracao.classList.add('heart-particle');
   coracao.innerHTML = ['❤️', '💖', '✨', '🌹'][Math.floor(Math.random() * 4)];
-  coracao.style.left = Math.random() * 100 + 'vw';
-  coracao.style.animationDuration = (Math.random() * 3 + 3) + 's'; // Entre 3 e 6 segundos
-  coracao.style.fontSize = (Math.random() * 15 + 15) + 'px';
+  coracao.style.left = Math.random() * 95 + 'vw';
+  coracao.style.animationDuration = (Math.random() * 3 + 4) + 's'; // velocidade suave
+  coracao.style.fontSize = (Math.random() * 12 + 16) + 'px';
   
   document.body.appendChild(coracao);
-  
-  setTimeout(() => {
-    coracao.remove();
-  }, 6000);
+  setTimeout(() => { coracao.remove(); }, 7000);
 }
-setInterval(criarCoracao, 4000); // Cria um novo símbolo a cada 400ms
-
 
 /* 💖 CONTADOR DE DATAS */
 const inicioNamoro = new Date(2025, 0, 18);
 const dataCasamento = new Date(2026, 10, 22);
-
 const cont = document.getElementById("contador");
 const casamento = document.getElementById("casamento");
 
@@ -251,14 +354,14 @@ function atualizar() {
     dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
   }
 
-  cont.innerHTML = `💖 <span>${meses} meses</span> e <span>${dias} dias</span> de puro amor`;
+  cont.innerHTML = `💖 <span>${meses} meses</span> e <span>${dias} dias</span> juntos`;
 
   const diff = dataCasamento - agora;
   if (diff > 0) {
     const diasRestantes = Math.floor(diff / (1000 * 60 * 60 * 24));
-    casamento.textContent = `💍 Faltam ${diasRestantes} dias para o nosso grande dia!`;
+    casamento.textContent = `💍 Faltam ${diasRestantes} dias para o nosso casamento`;
   } else {
-    casamento.textContent = "💍 Chegou o nosso casamento! 💒✨";
+    casamento.textContent = "💍 Hoje é o nosso grande dia! 💒✨";
   }
 }
 
